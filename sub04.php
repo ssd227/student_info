@@ -1,39 +1,38 @@
-<?php // sub03.php
+<?php // sub04.php
   require_once 'login.php';
   $conn = new mysqli($hn, $un, $pw, $db);
   if ($conn->connect_error) die($conn->connect_error);
 
   echo <<<_END
-  <form action="sub03.php" method="post"><pre>
-    GRADE <input type="text" name="grade">
-    年级成绩报表  <input type="submit" value="GRADE RECORD">
-  </pre></form>
-  <form action="sub03.php" method="post"><pre>
-    GRADE <input type="text" name="grade1">
-    CLASS <input type="text" name="class">
-    班级成绩报表  <input type="submit" value="CLASS RECORD">
+  <form action="sub04.php" method="post"><pre>
+    ID(学号） <input type="text" name="id">
+    学生成绩<input type="radio" name="select" value="1" checked="checked">
+    学生信息<input type="radio" name="select" value="2" >
+              <input type="submit" value="OUTPUT">
   </pre></form>
 _END;
 
 
-  if (isset($_POST['grade1']) && isset($_POST['class']))
+  if (isset($_POST['id']))
   {
-    $grade   = get_post($conn, 'grade1');
-    $class   = get_post($conn, 'class');
-      
-    $query    = "select grade,class,student.id,name,course,grades 
-    	      from 
-	      	   student join grade on student.id=grade.id
-	      where
-		grade='$grade' AND class='$class'
-	      ORDER BY id,course,grade DESC";
+    $id   = get_post($conn, 'id');
+    $select   = get_post($conn, 'select');
+  
+    if($select==1)
+      {
+	$query    = "select student.id,name,course,grades 
+    	            from 
+	      	      student join grade on student.id=grade.id
+	      	    where
+			student.id='$id'
+	      	    ORDER BY course, grades DESC";
 		
-    $result   = $conn->query($query);
-    if (!$result) echo "SELECT failed: $query<br>" .
-      $conn->error . "<br><br>";
+        $result   = $conn->query($query);
+        if (!$result) echo "SELECT failed: $query<br>" .
+          $conn->error . "<br><br>";
 
-   //output ...
-    $rows = $result->num_rows;
+        //output ...
+       $rows = $result->num_rows;
   
     for ($j = 0 ; $j < $rows ; ++$j)
       {
@@ -42,35 +41,29 @@ _END;
 
     echo <<<_END
       <pre>
-         GRADE $row[0]
-         CLASS $row[1]
-         ID    $row[2]
-         NAME  $row[3]
-         COURSE $row[4]
-	 GRADES $row[5]
+         ID       $row[0]
+         NAME     $row[1]
+         COURSE   $row[2]
+         GRADE    $row[3]
      </pre>
 _END;
       }
         $result->close();
-  }
-
-  elseif (isset($_POST['grade']) )
-  {
-    $grade   = get_post($conn, 'grade');
-      
-    $query    = "select grade,student.id,name,course,grades 
-    	      from 
-	      	   student join grade on student.id=grade.id
-	      where
-		grade='$grade'
-	      ORDER BY id,course,grade DESC";
+     }
+   elseif($select==2)
+      {
+	$query    = "select student.id,name,born,sex,age,grade,class,punishment,awards 
+    	            from 
+	      	      student
+	      	    where
+			student.id='$id'";
 		
-    $result   = $conn->query($query);
-    if (!$result) echo "SELECT failed: $query<br>" .
-      $conn->error . "<br><br>";
+        $result   = $conn->query($query);
+        if (!$result) echo "SELECT failed: $query<br>" .
+          $conn->error . "<br><br>";
 
-   //output ...
-    $rows = $result->num_rows;
+        //output ...
+       $rows = $result->num_rows;
   
     for ($j = 0 ; $j < $rows ; ++$j)
       {
@@ -79,18 +72,23 @@ _END;
 
     echo <<<_END
       <pre>
-         GRADE $row[0]
-         ID    $row[1]
-         NAME  $row[2]
-         COURSE $row[3]
-	 GRADES $row[4]
+         STUDENT_ID       $row[0]
+         NAME             $row[1]
+         BORN        	  $row[2]
+         SEX    	  $row[3]
+	 AGE    	  $row[4]
+	 GRADE   	  $row[5]
+	 CLASS   	  $row[6]
+	 PUNISHMENT   	  $row[7]
+	 AWARDS 	  $row[8]
      </pre>
 _END;
       }
         $result->close();
+     }
+     
   }
- 
-
+      
   $conn->close();
   
   function get_post($conn, $var)

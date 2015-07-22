@@ -26,7 +26,7 @@ _END;
 	      	   student join grade on student.id=grade.id
 	      where
 		grade='$grade' AND class='$class'
-	      ORDER BY id,course,grade DESC";
+	      ORDER BY id,course,grades DESC";
 		
     $result   = $conn->query($query);
     if (!$result) echo "SELECT failed: $query<br>" .
@@ -63,7 +63,7 @@ _END;
 	      	   student join grade on student.id=grade.id
 	      where
 		grade='$grade'
-	      ORDER BY id,course,grade DESC";
+	      ORDER BY id,course,grades DESC";
 		
     $result   = $conn->query($query);
     if (!$result) echo "SELECT failed: $query<br>" .
