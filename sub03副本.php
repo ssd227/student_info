@@ -21,7 +21,7 @@ _END;
     $grade   = get_post($conn, 'grade1');
     $class   = get_post($conn, 'class');
       
-    $query    = "select grade,class,student.id,name,course,grades 
+    $query    = "select grade,class,id,name,course,grades 
     	      from 
 	      	   student join grade on student.id=grade.id
 	      where
@@ -46,19 +46,17 @@ _END;
          CLASS $row[1]
          ID    $row[2]
          NAME  $row[3]
-         COURSE $row[4]
+         COURSE$row[4]
 	 GRADES $row[5]
      </pre>
-_END;
+    _END;
       }
-        $result->close();
   }
-
-  elseif (isset($_POST['grade']) )
+  elseif(isset($_POST['grade']))
   {
-    $grade   = get_post($conn, 'grade');
+    $grade =get_post($conn,'grade');
       
-    $query    = "select grade,student.id,name,course,grades 
+    $query    = "select grade,id,name,course,grades 
     	      from 
 	      	   student join grade on student.id=grade.id
 	      where
@@ -68,8 +66,7 @@ _END;
     $result   = $conn->query($query);
     if (!$result) echo "SELECT failed: $query<br>" .
       $conn->error . "<br><br>";
-
-   //output ...
+//output ...
     $rows = $result->num_rows;
   
     for ($j = 0 ; $j < $rows ; ++$j)
@@ -82,15 +79,14 @@ _END;
          GRADE $row[0]
          ID    $row[1]
          NAME  $row[2]
-         COURSE $row[3]
+         COURSE$row[3]
 	 GRADES $row[4]
      </pre>
-_END;
+    _END;
       }
-        $result->close();
   }
  
-
+  $result->close();
   $conn->close();
   
   function get_post($conn, $var)
