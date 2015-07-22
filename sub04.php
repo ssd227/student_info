@@ -4,12 +4,14 @@
   if ($conn->connect_error) die($conn->connect_error);
 
   echo <<<_END
+  <h1>子目录4: 学生成绩和信息查询</h1>
   <form action="sub04.php" method="post"><pre>
     ID(学号） <input type="text" name="id">
     学生成绩<input type="radio" name="select" value="1" checked="checked">
     学生信息<input type="radio" name="select" value="2" >
               <input type="submit" value="OUTPUT">
   </pre></form>
+  ---------------------------------------------------------------------
 _END;
 
 
@@ -46,6 +48,7 @@ _END;
          COURSE   $row[2]
          GRADE    $row[3]
      </pre>
+   ---------------------------------------------------------------------
 _END;
       }
         $result->close();

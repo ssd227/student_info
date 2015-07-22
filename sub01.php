@@ -56,17 +56,19 @@
   }
 
   echo <<<_END
+  <h1>子目录1：录入和修改成绩</h1>
   <form action="sub01.php" method="post"><pre>
-     Course   <input type="text" name="course">
-     Term     <input type="text" name="term">
-     Year     <input type="text" name="year">
-     Grades   <input type="text" name="grades">
-     ID       <input type="text" name="id">
-     NUM(仅在修改时需要填写)            <input type="text" name="num" value="NULL">
+     Course   <input type="text" name="course"> 如：math，chinese，english
+     Term     <input type="text" name="term"> 如：只可以输入 1，2
+     Year     <input type="text" name="year"> 如：2014 （表示2014学年）
+     Grades   <input type="text" name="grades"> 如：99 （分）单位省略
+     ID       <input type="text" name="id"> 如：选课学生的ID
+     NUM(仅在修改时需要填写，系统自动生成)    <input type="text" name="num" value="NULL">
      ADD    添加 <input type="radio" name="select" value="1" checked="checked">
      MODIFY 修改 <input type="radio" name="select" value="2">
-              <input type="submit" name="add" value="SUBMIT">
+     提交        <input type="submit" name="add" value="SUBMIT">
 </pre></form>
+<h2>结果如下：（可随意删改）</h2>
 _END;
 
   $query  = "SELECT * FROM grade";
@@ -89,12 +91,11 @@ _END;
     ID $row[4]
     NUM $row[5]
   </pre>
-  
   <form action="sub01.php" method="post">
   <input type="hidden" name="delete" value="yes">
   <input type="hidden" name="g_num" value="$row[5]">
   <input type="submit" value="DELETE"></form>
-  
+  -----------------------------------------------------------------------------
 _END;
 
   }

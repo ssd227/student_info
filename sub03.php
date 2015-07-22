@@ -4,6 +4,7 @@
   if ($conn->connect_error) die($conn->connect_error);
 
   echo <<<_END
+  <h1>子目录3: 年级和班级成绩报表</h1>
   <form action="sub03.php" method="post"><pre>
     GRADE <input type="text" name="grade">
     年级成绩报表  <input type="submit" value="GRADE RECORD">
@@ -13,6 +14,7 @@
     CLASS <input type="text" name="class">
     班级成绩报表  <input type="submit" value="CLASS RECORD">
   </pre></form>
+  ----------------------------------------------------------------------
 _END;
 
 
@@ -49,6 +51,7 @@ _END;
          COURSE $row[4]
 	 GRADES $row[5]
      </pre>
+ ----------------------------------------------------------------------
 _END;
       }
         $result->close();
@@ -85,6 +88,7 @@ _END;
          COURSE $row[3]
 	 GRADES $row[4]
      </pre>
+  ----------------------------------------------------------------------
 _END;
       }
         $result->close();

@@ -63,20 +63,22 @@
   }
 
   echo <<<_END
+  <h1>子目录2：录入和修改学生信息</h1>
   <form action="sub02.php" method="post"><pre>
-     ID      <input type="text" name="id">
-     NAME    <input type="text" name="name">
-     SEX     <input type="text" name="sex">
-     AGE     <input type="text" name="age">
-     GRADE   <input type="text" name="grade">
-     CLASS   <input type="text" name="class">
-     PUNISHMENT   <input type="text" name="punishment">
-     AWARDS  <input type="text" name="awards">
-     BORN    <input type="text" name="born">
+     ID  学生ID   <input type="text" name="id">正整数即可
+     NAME 姓名    <input type="text" name="name">
+     SEX  性别    <input type="text" name="sex">如:male,female
+     AGE  年龄    <input type="text" name="age">正整数即可
+     GRADE  年级  <input type="text" name="grade">如：2（表示2年级）
+     CLASS  班级  <input type="text" name="class">如：1（表示1班）
+     PUNISHMENT   <input type="text" name="punishment">限制在128个字符
+     AWARDS       <input type="text" name="awards">限制在128个字符
+     BORN 出生年份<input type="text" name="born">如：1993
      ADD    添加 <input type="radio" name="select" value="1" checked="checked">
      MODIFY 修改 <input type="radio" name="select" value="2">
-              <input type="submit" name="add" value="SUBMIT">
+     提交        <input type="submit" name="add" value="SUBMIT">
 </pre></form>
+<h2>结果如下:（可随意删改）</h2>
 _END;
 
   $query  = "SELECT * FROM student";
@@ -102,12 +104,11 @@ _END;
     AWARDS $row[7]
     BORN   $row[8]
   </pre>
-  
   <form action="sub02.php" method="post">
   <input type="hidden" name="delete" value="yes">
   <input type="hidden" name="s_id" value="$row[0]">
   <input type="submit" value="DELETE"></form>
-  
+----------------------------------------------------------------------------
 _END;
 
   }
