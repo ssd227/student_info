@@ -1,38 +1,8 @@
 <?php // sqltest.php
   require_once 'login.php';
-  
-//check login information
-if ($_POST['name']!='ssd227'||$_POST['password']!='ssd227')
-   die("your name or password is wrong");
-$un=$_POST['name'];
-$pw=$_POST['password'];
-
-//connect database
-$conn = new mysqli($hn, $un, $pw, $db);
+  $conn = new mysqli($hn, $un, $pw, $db);
   if ($conn->connect_error) die($conn->connect_error);
 
-
-
-
-
-  function sanitizeString($var)
-    {
-        if (get_magic_quotes_gpc())
-	   $var = stripslashes($var);
-	$var = strip_tags($var);
-        $var = htmlentities($var);
-        return $var;
-    }
-
-  function sanitizeMySQL($connection, $var)
-    {
-        $var = $connection->real_escape_string($var);
-	$var = sanitizeString($var);
-	return $var;
-    }
-
-
-/*
   if (isset($_POST['delete']) && isset($_POST['isbn']))
   {
     $isbn   = get_post($conn, 'isbn');
@@ -104,5 +74,5 @@ _END;
   function get_post($conn, $var)
   {
     return $conn->real_escape_string($_POST[$var]);
-  }*/
+  }
 ?>
