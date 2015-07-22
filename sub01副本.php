@@ -7,12 +7,44 @@
 
 //delete operation 
   if (isset($_POST['delete']) &&
-      isset($_POST['g_num']))
+      isset($_POST['g_id'])     &&
+      isset($_POST['g_course'])  &&
+      isset($_POST['g_year'])	&&
+      isset($_POST['g_term']))
   {
-    $num   = get_post($conn, 'g_num'); 
-    
+    $id   = get_post($conn, 'g_id');
+    $course=get_post($conn, 'g_course');
+    $year=get_post($conn, 'g_year');
+    $term=get_post($conn, 'g_term');
+
     $query  = "DELETE FROM grade WHERE 
-      num='$num'";
+      id='$id'         AND
+      course='$course' AND
+      year='$year'     AND
+      term='$term'";
+      
+    $result = $conn->query($query);
+  	if (!$result) echo "DELETE failed: $query<br>" .
+      $conn->error . "<br><br>";
+  }
+  
+ //modify operation
+  if (isset($_POST['modify']) &&
+      isset($_POST['g_id'])     &&
+      isset($_POST['g_course'])  &&
+      isset($_POST['g_year'])	&&
+      isset($_POST['g_term']))
+  {
+    $id   = get_post($conn, 'g_id');
+    $course=get_post($conn, 'g_course');
+    $year=get_post($conn, 'g_year');
+    $term=get_post($conn, 'g_term');
+
+    $query  = "DELETE FROM grade WHERE 
+      id='$id'         AND
+      course='$course' AND
+      year='$year'     AND
+      term='$term'";
       
     $result = $conn->query($query);
   	if (!$result) echo "DELETE failed: $query<br>" .
@@ -32,27 +64,11 @@
     $term     = get_post($conn, 'term');
     $id       = get_post($conn, 'id');
     $grades   = get_post($conn, 'grades');
-    $select   = get_post($conn, 'select');
-    $num      = $_POST['num'];
-
-    if($select==1)
-    {
-	$query    = "INSERT INTO grade VALUES" .
-      	"('$course', '$term', '$year', '$grades', '$id','NULL')";
-    	$result   = $conn->query($query);
+    $query    = "INSERT INTO grade VALUES" .
+      "('$course', '$term', '$year', '$grades', '$id')";
+    $result   = $conn->query($query);
   	if (!$result) echo "INSERT failed: $query<br>" .
-      	$conn->error . "<br><br>";
-    }
-    elseif($select==2 && $num>0)
-    {
-	  $query    = "UPDATE grade SET course='$course',term='$term',".
-	  "year='$year',grades='$grades',id='$id'".
-	  "where num='$num'";
-          $result   = $conn->query($query);
-	  if (!$result) echo "MODIFY failed: $query<br>" .
-	  $conn->error . "<br><br>";
-    
-    }
+      $conn->error . "<br><br>";
   }
 
   echo <<<_END
@@ -62,9 +78,7 @@
      Year     <input type="text" name="year">
      Grades   <input type="text" name="grades">
      ID       <input type="text" name="id">
-     NUM(仅在修改时需要填写)            <input type="text" name="num" value="NULL">
-     ADD    添加 <input type="radio" name="select" value="1" checked="checked">
-     MODIFY 修改 <input type="radio" name="select" value="2">
+    
               <input type="submit" name="add" value="SUBMIT">
 </pre></form>
 _END;
@@ -87,12 +101,14 @@ _END;
     Year $row[2]
     Grade $row[3]
     ID $row[4]
-    NUM $row[5]
   </pre>
   
   <form action="sub01.php" method="post">
   <input type="hidden" name="delete" value="yes">
-  <input type="hidden" name="g_num" value="$row[5]">
+  <input type="hidden" name="g_course" value="$row[0]">
+  <input type="hidden" name="g_term" value="$row[1]">
+  <input type="hidden" name="g_year" value="$row[2]">
+  <input type="hidden" name="g_id" value="$row[4]">
   <input type="submit" value="DELETE"></form>
   
 _END;
